@@ -1,3 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+/* ─── Paleta Global Gnosis ──────────────────────────────────────────────── */
+:root {
+  /* Colores */
+  --color-naranja:     #F57C00;
+  --color-azul:        #1F3A6D;
+  --color-amarillo:    #FBC02D;
+  --color-gris-oscuro: #2E2E2E;
+  --color-gris-claro:  #F4F6F8;
+  --color-blanco:      #FFFFFF;
+}
+
+/* ─── Reset global básico ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: var(--color-gris-oscuro);
+  background-color: var(--color-gris-claro);
+}
+
+/* ─── Extensión del tema Tailwind v4 ────────────────────────────────────── */
+@theme {
+  /* Colores */
+  --color-naranja:     #F57C00;
+  --color-azul:        #1F3A6D;
+  --color-amarillo:    #FBC02D;
+  --color-gris-oscuro: #2E2E2E;
+  --color-gris-claro:  #F4F6F8;
+  --color-blanco:      #FFFFFF;
+}
