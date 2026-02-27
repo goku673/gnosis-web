@@ -16,6 +16,9 @@ export type IconName =
   // ── Configuración / Settings ──────────────────────────────────────────────
   | 'settings' | 'sliders' | 'toggle-left' | 'toggle-right' | 'sun' | 'moon'
   // ── Acciones generales ────────────────────────────────────────────────────
-  | 'search' | 'filter' | 'sort' | 'edit' | 'trash' | 'save' | 'copy' | 'paste' | 'plus' | 'minus' | 'x' | 'check' | 'refresh' | 'more-vertical' | 'more-horizontal' | 'print' | 'share' | 'link';
-
-export type IconSize = 12 | 16 | 20 | 24 | 32 | 48;
+  | 'search' | 'filter' | 'sort' | 'edit' | 'trash' | 'save' | 'copy' | 'paste' | 'plus' | 'minus' | 'x' | 'check' | 'refresh' | 'more-vertical' | 'more-horizontal' | 'print' | 'share' | 'link'
+  // ── NUEVOS: Contacto, Educación y UI ──────────────────────────────────────
+  | 'clock' | 'calendar' | 'award' | 'map-pin' | 'phone' | 'mail'
+  //social network
+  | 'facebook' | 'instagram' | 'youtube';
+export type IconSize = 12 | 16 | 20 | 24 | 28 | 32 | 40 | 48; 
