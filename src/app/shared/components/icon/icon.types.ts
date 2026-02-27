@@ -16,6 +16,8 @@ export type IconName =
   // ── Configuración / Settings ──────────────────────────────────────────────
   | 'settings' | 'sliders' | 'toggle-left' | 'toggle-right' | 'sun' | 'moon'
   // ── Acciones generales ────────────────────────────────────────────────────
-  | 'search' | 'filter' | 'sort' | 'edit' | 'trash' | 'save' | 'copy' | 'paste' | 'plus' | 'minus' | 'x' | 'check' | 'refresh' | 'more-vertical' | 'more-horizontal' | 'print' | 'share' | 'link';
+  | 'search' | 'filter' | 'sort' | 'edit' | 'trash' | 'save' | 'copy' | 'paste' | 'plus' | 'minus' | 'x' | 'check' | 'refresh' | 'more-vertical' | 'more-horizontal' | 'print' | 'share' | 'link'
+  // ── Contacto / Redes sociales ─────────────────────────────────────────────
+  | 'calendar' | 'clock' | 'phone' | 'mail' | 'map-pin' | 'award' | 'facebook' | 'instagram' | 'youtube';
 
 export type IconSize = 12 | 16 | 20 | 24 | 32 | 48;

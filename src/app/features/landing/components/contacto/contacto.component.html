@@ -1,0 +1,87 @@
+<!-- Sección Contacto e Información -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <h2 class="text-4xl md:text-5xl font-bold text-azul mb-12 text-center">
+      Contacto e Información
+    </h2>
+
+    <!-- Información de Contacto Grid -->
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+      @for (info of contactoInfo; track info.titulo) {
+        <div
+          class="bg-white border-2 border-gray-200 rounded-lg p-8 text-center hover:shadow-lg transition-all"
+        >
+          <app-icon [name]="info.icono" class="text-naranja mx-auto mb-4" [size]="40"></app-icon>
+
+          <h3 class="text-xl font-bold text-azul mb-4">{{ info.titulo }}</h3>
+
+          <div class="space-y-2">
+            @for (detalle of info.detalles; track detalle) {
+              <p class="text-gray-600">{{ detalle }}</p>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-azul text-white py-12">
+  <div class="container mx-auto px-4 max-w-7xl">
+    <!-- Footer Content -->
+    <div class="grid md:grid-cols-3 gap-12 mb-8">
+      <!-- Acerca de -->
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 bg-naranja rounded-full flex items-center justify-center font-bold">
+            G
+          </div>
+          <span class="text-lg font-bold">GNOSIS</span>
+        </div>
+
+        <p class="text-gray-300 text-sm leading-relaxed">
+          Formando profesionales técnicos superiores en Autotrónica desde 2010. Comprometidos con
+          la excelencia educativa y la calidad técnica.
+        </p>
+      </div>
+
+      <!-- Enlaces Rápidos -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Enlaces Rápidos</h4>
+
+        <ul class="space-y-2">
+          @for (enlace of enlacesRapidos; track enlace.texto) {
+            <li>
+              <a [href]="enlace.enlace" class="text-gray-300 hover:text-naranja transition-colors">
+                {{ enlace.texto }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Redes Sociales -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Síguenos</h4>
+
+        <div class="flex gap-4">
+          @for (red of redesSociales; track red.icono) {
+            <a
+              [href]="red.enlace"
+              class="w-10 h-10 bg-white/10 hover:bg-naranja rounded-full flex items-center justify-center transition-colors"
+              [attr.aria-label]="red.icono"
+            >
+              <app-icon [name]="red.icono" class="text-white" [size]="20"></app-icon>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-white/20 pt-8 text-center text-gray-400 text-sm">
+      <p>&copy; 2026 Instituto Tecnológico GNOSIS - Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>

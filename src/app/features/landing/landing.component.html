@@ -1,4 +1,5 @@
 <div class="min-h-screen bg-gris-claro font-sans">
+  <!-- Navbar -->
   <nav
     class="bg-azul text-white px-8 py-4 flex items-center justify-between shadow-md relative z-10"
   >
@@ -35,35 +36,15 @@
     </div>
   </nav>
 
-  <header
-    class="relative bg-azul text-white overflow-hidden flex items-center justify-center min-h-[80vh]"
-  >
-    <div class="absolute inset-0 bg-black/40 z-0"></div>
+  <!-- 1. Hero Section with Carousel -->
+  <app-hero-carousel></app-hero-carousel>
 
-    <div class="relative z-10 text-center max-w-4xl px-4 flex flex-col items-center">
-      <div
-        class="bg-naranja/20 border border-naranja text-naranja px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 mb-6"
-      >
-        <app-icon name="check-circle" [size]="16"></app-icon>
-        Formación Técnica Superior
-      </div>
+  <!-- 2. Cursos de Temporada Section -->
+  <app-cursos-temporada></app-cursos-temporada>
 
-      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-        Carrera de Autotrónica
-      </h1>
+  <!-- 3. Carrera Profesional Section -->
+  <app-carrera-profesional></app-carrera-profesional>
 
-      <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed">
-        Conviértete en un experto en sistemas automotrices electrónicos y mecánicos. Formación
-        integral en <span class="text-naranja font-bold">6 semestres</span> con enfoque práctico y
-        profesional.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4">
-        <app-button text="Ver Cursos de Temporada" variant="primary" icon="chevron-right">
-        </app-button>
-
-        <app-button text="Conocer la Carrera" variant="outline"> </app-button>
-      </div>
-    </div>
-  </header>
+  <!-- 4. Contacto e Información Section -->
+  <app-contacto></app-contacto>
 </div>
