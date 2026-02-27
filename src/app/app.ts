@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { IconComponent } from './shared/components/icon/icon.component';
+import { LandingComponent } from './features/landing/landing.component';
+//import { IconComponent } from './shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, IconComponent],
+  imports: [RouterOutlet, LandingComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
