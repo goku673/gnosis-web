@@ -1,16 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* ─── Tipografía Auto-hosteada: Inter (Variable Font) ───────────────────── */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 /* ─── Paleta Global Gnosis ──────────────────────────────────────────────── */
 :root {
   /* Colores */
-  --color-naranja:     #F57C00;
-  --color-azul:        #1F3A6D;
-  --color-amarillo:    #FBC02D;
-  --color-gris-oscuro: #2E2E2E;
-  --color-gris-claro:  #F4F6F8;
-  --color-blanco:      #FFFFFF;
+  --color-naranja: #f57c00;
+  --color-azul: #1f3a6d;
+  --color-amarillo: #fbc02d;
+  --color-gris-oscuro: #2e2e2e;
+  --color-gris-claro: #f4f6f8;
+  --color-blanco: #ffffff;
 }
 
 /* ─── Reset global básico ──────────────────────────────────────────── */
@@ -22,17 +40,27 @@
 
 html,
 body {
+  font-family: var(--font-principal);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--color-gris-oscuro);
   background-color: var(--color-gris-claro);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ─── Extensión del tema Tailwind v4 ────────────────────────────────────── */
 @theme {
   /* Colores */
-  --color-naranja:     #F57C00;
-  --color-azul:        #1F3A6D;
-  --color-amarillo:    #FBC02D;
-  --color-gris-oscuro: #2E2E2E;
-  --color-gris-claro:  #F4F6F8;
-  --color-blanco:      #FFFFFF;
+  --color-naranja: #f57c00;
+  --color-azul: #1f3a6d;
+  --color-amarillo: #fbc02d;
+  --color-gris-oscuro: #2e2e2e;
+  --color-gris-claro: #f4f6f8;
+  --color-blanco: #ffffff;
+
+  /* Fuentes */
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  --font-family-principal: 'Inter', system-ui, sans-serif;
 }
