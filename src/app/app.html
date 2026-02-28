@@ -1,22 +1,60 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div class="min-h-screen bg-gris-claro font-sans">
+  <!-- Navbar persistente en todas las rutas -->
+  <nav class="bg-azul text-white px-8 py-4 shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto grid grid-cols-3 items-center">
+      <div class="flex items-center gap-3 justify-start">
+        <div
+          class="w-10 h-10 bg-naranja rounded-full flex items-center justify-center font-bold text-xl"
+        >
+          G
+        </div>
+        <div class="hidden lg:block">
+          <h2 class="font-bold text-lg leading-tight">Instituto Tecnológico GNOSIS</h2>
+          <p class="text-[0.65rem] text-gray-300 uppercase tracking-wider">
+            Formando profesionales
+          </p>
+        </div>
+      </div>
 
-<style></style>
+      <div class="hidden md:flex items-center justify-center gap-10 font-medium text-sm">
+        <a
+          [routerLink]="['/']"
+          routerLinkActive="text-naranja"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="relative group py-2 flex items-center gap-2 hover:text-naranja transition-colors"
+        >
+          <app-icon name="home" [size]="16"></app-icon>
+          <span>INICIO</span>
+          <span class="absolute bottom-0 left-0 w-full h-0.5 bg-naranja transition-all duration-300"></span>
+        </a>
 
-<app-landing></app-landing>
+        <a
+          [routerLink]="['/authorities']"
+          routerLinkActive="text-naranja"
+          class="relative group py-2 flex items-center gap-2 hover:text-naranja transition-colors"
+        >
+          <app-icon name="users" [size]="16"></app-icon>
+          <span>AUTORIDADES</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-naranja transition-all duration-300 group-hover:w-full"
+          ></span>
+        </a>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+        <a
+          [routerLink]="['/teachers']"
+          routerLinkActive="text-naranja"
+          class="relative group py-2 flex items-center gap-2 hover:text-naranja transition-colors"
+        >
+          <app-icon name="user" [size]="16"></app-icon>
+          <span>DOCENTES</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-naranja transition-all duration-300 group-hover:w-full"
+          ></span>
+        </a>
+      </div>
+    </div>
+  </nav>
 
-<router-outlet />
+  <!-- Aquí se renderizan todas las rutas -->
+  <router-outlet />
+</div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ButtonComponent } from '../../shared/components/button/button.component';
+import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HeroCarouselComponent } from './components/hero-carousel/hero-carousel.component';
@@ -10,7 +10,7 @@ import { SeasonalCoursesComponent } from './components/seasonal-courses/seasonal
   selector: 'app-landing',
   standalone: true,
   imports: [
-    // ButtonComponent,
+    RouterLink,
     IconComponent,
     ProfessionalCareerComponent,
     SeasonalCoursesComponent,
