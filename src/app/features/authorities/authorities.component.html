@@ -1,0 +1,76 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
+    <!-- Header Section -->
+    <div class="bg-azul text-white px-8 py-12 flex flex-col items-center gap-4">
+      <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center">
+        <app-icon name="settings" [size]="40" class="text-naranja"></app-icon>
+      </div>
+      <h1 class="text-3xl font-bold">Iniciar Sesión</h1>
+      <p class="text-gray-200">Portal de Autoridades y Administradores</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="px-8 py-8">
+      <!-- Role Type Select -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-azul mb-2">Tipo de Autoridad</label>
+        <select
+          [value]="form().roleType"
+          (change)="updateRoleType($event.target.value)"
+          class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-naranja transition-colors"
+        >
+          <option *ngFor="let role of roles" [value]="role.value">
+            {{ role.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Username Field -->
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-azul mb-2">Usuario</label>
+        <input
+          type="text"
+          placeholder="Ingrese su usuario"
+          [value]="form().username"
+          (input)="updateUsername($event.target.value)"
+          class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-naranja transition-colors"
+        />
+        <p class="text-xs text-gray-600 mt-1">
+          Credencial de prueba: <span class="font-bold">{{ demoCredentials[form().roleType].username }}</span>
+        </p>
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-8">
+        <label class="block text-sm font-bold text-azul mb-2">Contraseña</label>
+        <div class="relative">
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            placeholder="Ingrese su contraseña"
+            [value]="form().password"
+            (input)="updatePassword($event.target.value)"
+            class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-naranja transition-colors"
+          />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-naranja transition-colors"
+          >
+            <app-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="20"></app-icon>
+          </button>
+        </div>
+        <p class="text-xs text-gray-600 mt-1">
+          Credencial de prueba: <span class="font-bold">{{ demoCredentials[form().roleType].password }}</span>
+        </p>
+      </div>
+
+      <!-- Login Button -->
+      <button
+        (click)="handleLogin()"
+        class="w-full bg-naranja hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+      >
+        Iniciar Sesión
+      </button>
+    </div>
+  </div>
+</div>
