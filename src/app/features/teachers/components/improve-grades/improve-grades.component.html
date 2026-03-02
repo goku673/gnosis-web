@@ -1,0 +1,298 @@
+<div>
+  <!-- Title -->
+  <h2 class="text-2xl font-bold text-azul">Subir Calificaciones</h2>
+  <p class="text-sm text-gray-500 mb-6">Gestión de notas mediante carga masiva o ingreso manual</p>
+
+  <!-- Success Message -->
+  @if (showSuccessMessage()) {
+  <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+    <app-icon name="check-circle" [size]="20" customClass="text-green-600"></app-icon>
+    <p class="text-sm text-green-800 font-medium">Calificaciones guardadas exitosamente.</p>
+  </div>
+  }
+
+  <!-- Tabs -->
+  <div class="flex mb-6 bg-gray-100 rounded-lg p-1">
+    <button (click)="setTab('masiva')"
+      class="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-md text-sm font-medium transition-all cursor-pointer"
+      [class]="activeTab() === 'masiva'
+        ? 'bg-white text-azul shadow-sm'
+        : 'text-gray-500 hover:text-gray-700'">
+      <app-icon name="upload" [size]="16"></app-icon>
+      <span>Carga Masiva</span>
+    </button>
+    <button (click)="setTab('editar')"
+      class="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-md text-sm font-medium transition-all cursor-pointer"
+      [class]="activeTab() === 'editar'
+        ? 'bg-white text-azul shadow-sm'
+        : 'text-gray-500 hover:text-gray-700'">
+      <app-icon name="edit" [size]="16"></app-icon>
+      <span>Editar Calificaciones</span>
+    </button>
+  </div>
+
+  @if (activeTab() === 'masiva') {
+  <!-- Format Info -->
+  <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
+    <app-icon name="info" [size]="18" customClass="text-amber-600 mt-0.5 shrink-0"></app-icon>
+    <div>
+      <p class="text-sm font-semibold text-amber-900">Formato requerido:</p>
+      <p class="text-sm text-amber-800">
+        El archivo Excel debe contener las columnas: Carnet, Nombre Completo, TP1, TP2, TP3, P1, P2, Examen Final,
+        Promedio Final
+      </p>
+    </div>
+  </div>
+
+  <!-- Select Materia -->
+  <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+    <div class="flex items-center gap-2 mb-4">
+      <app-icon name="search" [size]="16" customClass="text-azul"></app-icon>
+      <h3 class="text-sm font-semibold text-azul">Seleccionar Materia</h3>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+        <app-icon name="book-open" [size]="16" customClass="text-gray-400"></app-icon>
+      </div>
+      <select [ngModel]="selectedMateria()" (ngModelChange)="onMateriaChange($event)"
+        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-naranja cursor-pointer bg-white">
+        <option value="" disabled>Selecciona una materia</option>
+        @for (materia of materias; track materia.nombre) {
+        <option [value]="materia.nombre">
+          {{ materia.nombre }} - {{ materia.semestre }} - {{ materia.grupo }}
+        </option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- File Upload Zone -->
+  <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+    <div class="flex items-center gap-2 mb-4">
+      <app-icon name="file-plus" [size]="16" customClass="text-azul"></app-icon>
+      <h3 class="text-sm font-semibold text-azul">Cargar Archivo Excel</h3>
+    </div>
+
+    @if (!uploadedFile()) {
+    <div (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+      (click)="fileInput.click()"
+      class="border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all"
+      [class]="isDragging()
+            ? 'border-naranja bg-orange-50'
+            : 'border-gray-300 hover:border-naranja hover:bg-orange-50/50'">
+      <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+        <app-icon name="upload" [size]="24" customClass="text-naranja"></app-icon>
+      </div>
+      <p class="text-sm text-gray-600">
+        <span class="text-naranja font-semibold cursor-pointer">Selecciona un archivo</span>
+        {{ ' ' }}o arrastra y suelta
+      </p>
+      <p class="text-xs text-gray-400 mt-1">Formatos permitidos: .xlsx, .xls (Máximo 10MB)</p>
+      <input #fileInput type="file" accept=".xlsx,.xls" (change)="onFileSelect($event)" class="hidden" />
+    </div>
+    } @else {
+    <!-- Uploaded File Info -->
+    <div class="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+          <app-icon name="file-check" [size]="20" customClass="text-green-600"></app-icon>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900">{{ uploadedFile()?.name }}</p>
+          <p class="text-xs text-gray-500">{{ parsedData().length }} registros encontrados</p>
+        </div>
+      </div>
+      <button (click)="removeFile()" class="p-2 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+        title="Eliminar archivo">
+        <app-icon name="x" [size]="18"></app-icon>
+      </button>
+    </div>
+    }
+
+    <!-- Error Message -->
+    @if (fileError()) {
+    <div class="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
+      <app-icon name="alert-circle" [size]="16" customClass="text-red-500"></app-icon>
+      <p class="text-sm text-red-700">{{ fileError() }}</p>
+    </div>
+    }
+  </div>
+
+  <!-- Preview Table -->
+  @if (parsedData().length > 0) {
+  <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <app-icon name="table" [size]="16" customClass="text-azul"></app-icon>
+        <h3 class="text-sm font-semibold text-azul">Vista Previa de Datos</h3>
+      </div>
+      <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
+        {{ parsedData().length }} registros
+      </span>
+    </div>
+
+    <div class="overflow-x-auto rounded-lg border border-gray-200">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-azul text-white">
+            <th class="px-3 py-2 text-left text-xs font-semibold">#</th>
+            @for (header of columnHeaders; track header) {
+            <th class="px-3 py-2 text-left text-xs font-semibold whitespace-nowrap">{{ header }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of parsedData(); track $index; let idx = $index) {
+          <tr class="border-b border-gray-100 hover:bg-gray-50" [class.bg-gray-50]="idx % 2 === 0">
+            <td class="px-3 py-2 text-gray-500 text-xs">{{ idx + 1 }}</td>
+            @for (val of getRowValues(row); track $index) {
+            <td class="px-3 py-2 text-gray-700 whitespace-nowrap">{{ val }}</td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Save Button -->
+  <div class="flex justify-end mb-6">
+    <button (click)="requestSave()" [disabled]="!canSave()"
+      class="flex items-center gap-2 px-6 py-3 bg-naranja text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+      <app-icon name="save" [size]="18"></app-icon>
+      <span>Guardar Calificaciones</span>
+    </button>
+  </div>
+  }
+
+  <!-- Saved Uploads History -->
+  @if (savedUploads().length > 0) {
+  <div class="bg-white rounded-xl border border-gray-200 p-6">
+    <div class="flex items-center gap-2 mb-4">
+      <app-icon name="file-text" [size]="16" customClass="text-azul"></app-icon>
+      <h3 class="text-sm font-semibold text-azul">Calificaciones Guardadas</h3>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      @for (upload of savedUploads(); track $index) {
+      <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-azul/10 rounded-lg flex items-center justify-center">
+            <app-icon name="file-check" [size]="20" customClass="text-azul"></app-icon>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-900">{{ upload.materia }}</p>
+            <p class="text-xs text-gray-500">
+              {{ upload.archivo }} - {{ upload.registros }} registros - {{ upload.fecha }}
+            </p>
+          </div>
+        </div>
+        <button (click)="viewSavedUpload(upload)"
+          class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-azul bg-azul/10 rounded-md hover:bg-azul/20 transition-colors cursor-pointer">
+          <app-icon name="eye" [size]="14"></app-icon>
+          <span>Ver datos</span>
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  }
+  } @else {
+  <!-- Editar Calificaciones Tab -->
+  <div class="bg-white rounded-xl border border-gray-200 p-10 text-center">
+    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <app-icon name="edit" [size]="28" customClass="text-gray-400"></app-icon>
+    </div>
+    <h3 class="text-lg font-semibold text-gray-700 mb-2">Editar Calificaciones</h3>
+    <p class="text-sm text-gray-500">
+      Esta funcionalidad estará disponible próximamente. Por ahora, utilice la carga masiva mediante archivos Excel.
+    </p>
+  </div>
+  }
+</div>
+
+<!-- Confirm Save Modal -->
+@if (showConfirmSave()) {
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
+  <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+        <app-icon name="alert-triangle" [size]="20" customClass="text-amber-600"></app-icon>
+      </div>
+      <h3 class="text-lg font-bold text-gray-900">Confirmar Carga de Calificaciones</h3>
+    </div>
+    <div class="mb-6">
+      <p class="text-sm text-gray-600 mb-3">
+        Está a punto de guardar las calificaciones con los siguientes datos:
+      </p>
+      <div class="bg-gray-50 rounded-lg p-3 text-sm">
+        <p class="text-gray-700"><span class="font-semibold">Materia:</span> {{ selectedMateria() }}</p>
+        <p class="text-gray-700"><span class="font-semibold">Archivo:</span> {{ uploadedFile()?.name }}</p>
+        <p class="text-gray-700"><span class="font-semibold">Registros:</span> {{ parsedData().length }} estudiantes</p>
+      </div>
+      <p class="text-xs text-red-600 mt-3 font-medium">
+        Esta acción no se puede deshacer. Verifique que los datos sean correctos antes de continuar.
+      </p>
+    </div>
+    <div class="flex gap-3 justify-end">
+      <button (click)="cancelSave()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+        Cancelar
+      </button>
+      <button (click)="confirmSave()"
+        class="px-4 py-2 text-sm font-medium text-white bg-naranja rounded-lg hover:bg-orange-600 transition-colors cursor-pointer">
+        Sí, guardar calificaciones
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+<!-- View Saved Data Modal -->
+@if (viewingSavedData()) {
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-5xl mx-4 max-h-[85vh] flex flex-col">
+    <div class="flex items-center justify-between p-6 border-b border-gray-200 shrink-0">
+      <div>
+        <h3 class="text-lg font-bold text-azul">{{ viewingSavedData()?.materia }}</h3>
+        <p class="text-xs text-gray-500">
+          {{ viewingSavedData()?.archivo }} - {{ viewingSavedData()?.fecha }}
+        </p>
+      </div>
+      <button (click)="closeSavedView()" class="p-2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer">
+        <app-icon name="x" [size]="20"></app-icon>
+      </button>
+    </div>
+    <div class="flex-1 overflow-auto p-6">
+      <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-azul text-white">
+              <th class="px-3 py-2 text-left text-xs font-semibold">#</th>
+              @for (header of columnHeaders; track header) {
+              <th class="px-3 py-2 text-left text-xs font-semibold whitespace-nowrap">{{ header }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of viewingSavedData()?.data || []; track $index; let idx = $index) {
+            <tr class="border-b border-gray-100 hover:bg-gray-50" [class.bg-gray-50]="idx % 2 === 0">
+              <td class="px-3 py-2 text-gray-500 text-xs">{{ idx + 1 }}</td>
+              @for (val of getRowValues(row); track $index) {
+              <td class="px-3 py-2 text-gray-700 whitespace-nowrap">{{ val }}</td>
+              }
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="p-4 border-t border-gray-200 flex justify-end shrink-0">
+      <button (click)="closeSavedView()"
+        class="px-4 py-2 text-sm font-medium text-white bg-azul rounded-lg hover:bg-blue-900 transition-colors cursor-pointer">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+}
