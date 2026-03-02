@@ -1,0 +1,59 @@
+<div>
+  <!-- Title -->
+  <h2 class="text-2xl font-bold text-azul">Panel Docente</h2>
+  <p class="text-sm text-gray-500 mb-6">Bienvenido al sistema académico</p>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+    <!-- Materias Asignadas -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 flex items-center justify-between">
+      <div>
+        <p class="text-sm text-naranja font-medium mb-1">Materias Asignadas</p>
+        <p class="text-3xl font-bold text-gray-900">{{ materiasAsignadas }}</p>
+      </div>
+      <div class="w-12 h-12 bg-naranja rounded-lg flex items-center justify-center">
+        <app-icon name="book-open" [size]="24" customClass="text-white"></app-icon>
+      </div>
+    </div>
+
+    <!-- Total Estudiantes -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-medium mb-1">Total Estudiantes</p>
+        <p class="text-3xl font-bold text-gray-900">{{ totalEstudiantes }}</p>
+      </div>
+      <div class="w-12 h-12 bg-azul rounded-lg flex items-center justify-center">
+        <app-icon name="users" [size]="24" customClass="text-white"></app-icon>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Próximas Actividades -->
+  <div class="bg-white rounded-xl border border-gray-200 p-6">
+    <div class="flex items-center gap-2 mb-4">
+      <app-icon name="clock" [size]="24" customClass="text-azul"></app-icon>
+      <h3 class="text-sm font-semibold text-azul">Próximas Actividades</h3>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <div 
+        *ngFor="let actividad of actividades; trackBy: trackByTitulo"
+        class="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+      >
+        <div>
+          <p class="font-semibold text-gray-900 text-sm">{{ actividad.titulo }}</p>
+          <p class="text-xs text-gray-500 mt-0.5">{{ actividad.fecha }}</p>
+        </div>
+        <span
+          class="px-3 py-1 text-xs font-semibold rounded-md"
+          [ngClass]="getEstadoClass(actividad.estado)"
+        >
+          {{ actividad.estado }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,62 +1,79 @@
-<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-  <div class="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
-    <!-- Header Section -->
-    <div class="bg-azul text-white px-8 py-12 flex flex-col items-center gap-4">
-      <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center">
-        <app-icon name="file-text" [size]="40" class="text-naranja"></app-icon>
-      </div>
-      <h1 class="text-3xl font-bold">Iniciar Sesión</h1>
-      <p class="text-gray-200">Portal de Docentes</p>
-    </div>
-
-    <!-- Form Section -->
-    <div class="px-8 py-8">
-      <!-- Username Field -->
-      <div class="mb-6">
-        <label class="block text-sm font-bold text-azul mb-2">Usuario</label>
-        <input
-          type="text"
-          placeholder="Ingrese su usuario"
-          [value]="form().username"
-          (input)="updateUsername($event.target.value)"
-          class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-naranja transition-colors"
-        />
-        <p class="text-xs text-gray-600 mt-1">
-          Credencial de prueba: <span class="font-bold">{{ demoCredentials.username }}</span>
-        </p>
+@if (!isLoggedIn()) {
+  <!-- Login View -->
+  <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
+      <!-- Header Section -->
+      <div class="bg-azul text-white px-8 py-12 flex flex-col items-center gap-4">
+        <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
+          <app-icon name="user-circle" [size]="48" customClass="text-white"></app-icon>
+        </div>
+        <h1 class="text-3xl font-bold">Iniciar Sesión</h1>
+        <p class="text-gray-200">Portal de Docentes</p>
       </div>
 
-      <!-- Password Field -->
-      <div class="mb-8">
-        <label class="block text-sm font-bold text-azul mb-2">Contraseña</label>
-        <div class="relative">
+      <!-- Form Section -->
+      <div class="px-8 py-8">
+        @if (loginError()) {
+          <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+            <app-icon name="alert-circle" [size]="16" customClass="text-red-500"></app-icon>
+            <span>{{ loginError() }}</span>
+          </div>
+        }
+
+        <!-- Username Field -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold text-azul mb-2">Usuario</label>
           <input
-            [type]="showPassword() ? 'text' : 'password'"
-            placeholder="Ingrese su contraseña"
-            [value]="form().password"
-            (input)="updatePassword($event.target.value)"
+            #usernameInput
+            type="text"
+            placeholder="Ingrese su usuario"
+            [value]="form().username"
+            (input)="updateUsername(usernameInput.value)"
+            (keydown.enter)="handleLogin()"
             class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-naranja transition-colors"
           />
-          <button
-            type="button"
-            (click)="togglePasswordVisibility()"
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-naranja transition-colors"
-          >
-            <app-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="20"></app-icon>
-          </button>
+          <p class="text-xs text-gray-600 mt-1">
+            Credencial de prueba: <span class="font-bold">{{ demoCredentials.username }}</span>
+          </p>
         </div>
-        <p class="text-xs text-gray-600 mt-1">
-          Credencial de prueba: <span class="font-bold">{{ demoCredentials.password }}</span>
-        </p>
-      </div>
 
-      <!-- Login Button -->
-      <button
-        (click)="handleLogin()"
-        class="w-full bg-naranja hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-colors"
-      >
-        Iniciar Sesión
-      </button>
+        <!-- Password Field -->
+        <div class="mb-8">
+          <label class="block text-sm font-bold text-azul mb-2">Contraseña</label>
+          <div class="relative">
+            <input
+              #passwordInput
+              [type]="showPassword() ? 'text' : 'password'"
+              placeholder="Ingrese su contraseña"
+              [value]="form().password"
+              (input)="updatePassword(passwordInput.value)"
+              (keydown.enter)="handleLogin()"
+              class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-naranja transition-colors"
+            />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-naranja transition-colors cursor-pointer"
+            >
+              <app-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="20"></app-icon>
+            </button>
+          </div>
+          <p class="text-xs text-gray-600 mt-1">
+            Credencial de prueba: <span class="font-bold">{{ demoCredentials.password }}</span>
+          </p>
+        </div>
+
+        <!-- Login Button -->
+        <button
+          (click)="handleLogin()"
+          class="w-full bg-naranja hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-colors cursor-pointer"
+        >
+          Iniciar Sesión
+        </button>
+      </div>
     </div>
   </div>
-</div>
+} @else {
+  <!-- Dashboard View -->
+  <app-teacher-dashboard (logout)="handleLogout()"></app-teacher-dashboard>
+}

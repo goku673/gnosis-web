@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -10,8 +11,9 @@ import { SeasonalCoursesComponent } from './components/seasonal-courses/seasonal
   selector: 'app-landing',
   standalone: true,
   imports: [
-    RouterLink,
-    IconComponent,
+    CommonModule,
+    //RouterLink,
+    //IconComponent,
     ProfessionalCareerComponent,
     SeasonalCoursesComponent,
     ContactComponent,
