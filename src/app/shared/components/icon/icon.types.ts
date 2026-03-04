@@ -6,11 +6,11 @@ export type IconName =
   // ── Usuarios / Personas ───────────────────────────────
   | 'user' | 'user-circle' | 'user-plus' | 'user-minus'
   | 'user-check' | 'users' | 'settings'
-  | 'book-open' | 'clock' | 'clipboard-list'
+  | 'book-open' | 'clock' | 'clipboard-list'| 'dollar-sign'
 
   // ── Autenticación ─────────────────────────────────────
   | 'login' | 'logout' | 'lock' | 'unlock'
-  | 'eye' | 'eye-off' | 'shield' | 'key'
+  | 'eye' | 'eye-off' | 'shield' | 'key' | 'credit-card'
 
   // ── Documentos / Archivos ─────────────────────────────
   | 'file' | 'file-text' | 'file-plus' | 'file-minus'

@@ -1,0 +1,119 @@
+<div class="flex h-[calc(100vh-64px)] overflow-hidden">
+  <!-- Sidebar -->
+  <aside class="bg-azul text-white flex flex-col shrink-0 w-full md:w-56">
+    <!-- Logo -->
+    <div class="px-5 py-5 flex items-center gap-3">
+      <div class="w-9 h-9 bg-naranja rounded-full flex items-center justify-center">
+        <app-icon name="award" [size]="20" customClass="text-white"></app-icon>
+      </div>
+      <div>
+        <h2 class="font-bold text-sm leading-tight">GNOSIS</h2>
+        <p class="text-xs md:text-sm text-gray-300">Sistema Academico</p>
+      </div>
+    </div>
+
+    <!-- Navigation (scrollable) -->
+    <nav class="flex-1 px-3 mt-1 overflow-y-auto">
+      @for (item of navItems; track item.id) {
+        <button
+          (click)="setView(item.id)"
+          class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg mb-0.5 text-sm font-medium transition-all cursor-pointer"
+          [class]="activeView() === item.id
+            ? 'bg-naranja text-white shadow-md'
+            : 'text-gray-200 hover:bg-white/10'"
+        >
+          <app-icon [name]="item.icon" [size]="18"></app-icon>
+          <span>{{ item.label }}</span>
+        </button>
+      }
+    </nav>
+
+    <!-- Footer -->
+    <div class="px-5 py-3 border-t border-white/10">
+      <p class="text-[0.6rem] text-gray-400">Instituto Tecnologico GNOSIS</p>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Top Header -->
+    <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between shrink-0">
+      <div>
+        <h1 class="text-lg font-bold text-azul">Panel de Administracion</h1>
+        <p class="text-xs text-gray-500">Carrera: Autotronica - Nivel Tecnico Superior</p>
+      </div>
+      <div class="flex items-center gap-5">
+        <!-- Notification bell -->
+        <button class="relative text-gray-500 hover:text-azul transition-colors cursor-pointer">
+          <app-icon name="bell" [size]="20"></app-icon>
+          <span class="absolute -top-1 -right-1 w-4 h-4 bg-naranja text-white text-[0.6rem] rounded-full flex items-center justify-center font-bold">3</span>
+        </button>
+        <!-- User info -->
+        <div class="flex items-center gap-3">
+          <div class="text-right">
+            <p class="text-sm font-semibold text-azul">{{ roleName }}</p>
+            <p class="text-xs text-gray-500">Super Administrador</p>
+          </div>
+          <div class="w-9 h-9 bg-azul text-white rounded-full flex items-center justify-center">
+            <app-icon name="user-circle" [size]="20"></app-icon>
+          </div>
+          <button
+            (click)="requestLogout()"
+            class="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+            title="Cerrar sesion"
+          >
+            <app-icon name="logout" [size]="20"></app-icon>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dynamic Content Area -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+      @switch (activeView()) {
+        @case ('dashboard') {
+
+        }
+        @default {
+          <!-- Placeholder for other views -->
+          <div class="flex flex-col items-center justify-center h-full text-gray-400">
+            <app-icon [name]="navItems[0].icon" [size]="48" customClass="mb-4 text-gray-300"></app-icon>
+            <h2 class="text-xl font-semibold text-gray-500 mb-2">{{ getPageTitle() }}</h2>
+            <p class="text-sm">Esta seccion se encuentra en desarrollo.</p>
+          </div>
+        }
+      }
+    </main>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+@if (showLogoutConfirm()) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm mx-4">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+          <app-icon name="alert-triangle" [size]="20" customClass="text-red-600"></app-icon>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900">Cerrar Sesion</h3>
+      </div>
+      <p class="text-sm text-gray-600 mb-6">
+        Esta seguro que desea cerrar sesion? Cualquier cambio no guardado se perdera.
+      </p>
+      <div class="flex gap-3 justify-end">
+        <button
+          (click)="cancelLogout()"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer"
+        >
+          Cancelar
+        </button>
+        <button
+          (click)="confirmLogout()"
+          class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors cursor-pointer"
+        >
+          Si, cerrar sesion
+        </button>
+      </div>
+    </div>
+  </div>
+}
