@@ -1,0 +1,40 @@
+<div class="relative w-full">
+
+  <select
+    [id]="selectId"
+    [value]="value()"
+    [disabled]="disabled"
+    [class]="selectClasses"
+    (change)="handleChange($event)"
+  >
+    <!-- Placeholder vacío -->
+    @if (placeholder) {
+      <option value="" disabled [selected]="!value()">{{ placeholder }}</option>
+    }
+
+    <!-- Opciones -->
+    @for (option of options; track option.value) {
+      <option
+        [value]="option.value"
+        [disabled]="option.disabled ?? false"
+        [selected]="value() === option.value"
+      >
+        {{ option.label }}
+      </option>
+    }
+  </select>
+
+  <!-- Ícono chevron derecho (reemplaza la flecha nativa) -->
+  <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+    <app-icon name="chevron-down" [size]="iconSize"></app-icon>
+  </span>
+
+  <!-- Mensaje de error -->
+  @if (errorMessage) {
+    <p class="mt-1 text-xs text-red-500 flex items-center gap-1">
+      <app-icon name="alert-circle" [size]="12"></app-icon>
+      {{ errorMessage }}
+    </p>
+  }
+
+</div>
