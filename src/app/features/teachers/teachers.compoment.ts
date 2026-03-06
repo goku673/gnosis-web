@@ -1,29 +1,37 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { InputComponent } from '../../shared/components/input/input.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
+import { BadgeComponent } from '../../shared/components/badge/badge.component';
+import { TextComponent } from '../../shared/components/text/text.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { TeacherDashboardComponent } from './components/teacher-dashboard/teacher-dashboard.component';
-
-interface LoginForm {
-  username: string;
-  password: string;
-}
 
 @Component({
   selector: 'app-teachers',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent, TeacherDashboardComponent],
+  imports: [
+    ReactiveFormsModule,
+    InputComponent,
+    ButtonComponent,
+    FormFieldComponent,
+    BadgeComponent,
+    TextComponent,
+    IconComponent,
+    TeacherDashboardComponent,
+  ],
   templateUrl: './teachers.component.html',
   styleUrl: './teachers.component.css',
 })
 export class TeachersComponent {
   isLoggedIn = signal(false);
-  showPassword = signal(false);
+  isLoading = signal(false);
   loginError = signal('');
 
-  form = signal<LoginForm>({
-    username: '',
-    password: '',
+  form = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl('', [Validators.required]),
   });
 
   demoCredentials = {
@@ -31,46 +39,40 @@ export class TeachersComponent {
     password: '123',
   };
 
-  togglePasswordVisibility(): void {
-    this.showPassword.update((value) => !value);
-  }
-
-  updateUsername(value: string): void {
-    this.form.update((form) => ({
-      ...form,
-      username: value,
-    }));
-    this.loginError.set('');
-  }
-
-  updatePassword(value: string): void {
-    this.form.update((form) => ({
-      ...form,
-      password: value,
-    }));
-    this.loginError.set('');
+  getError(controlName: string): string {
+    const control = this.form.get(controlName);
+    if (!control || !control.invalid || !control.touched) return '';
+    if (control.hasError('required')) return 'Este campo es obligatorio.';
+    if (control.hasError('minlength'))
+      return `Mínimo ${control.errors?.['minlength'].requiredLength} caracteres.`;
+    return 'Campo inválido.';
   }
 
   handleLogin(): void {
-    const currentForm = this.form();
-    if (!currentForm.username || !currentForm.password) {
-      this.loginError.set('Por favor, complete todos los campos.');
-      return;
-    }
-    if (
-      currentForm.username === this.demoCredentials.username &&
-      currentForm.password === this.demoCredentials.password
-    ) {
-      this.isLoggedIn.set(true);
-      this.loginError.set('');
-    } else {
-      this.loginError.set('Credenciales incorrectas. Intente nuevamente.');
-    }
+    this.form.markAllAsTouched();
+    if (this.form.invalid) return;
+
+    this.isLoading.set(true);
+    this.loginError.set('');
+
+    const { username, password } = this.form.value;
+
+    setTimeout(() => {
+      this.isLoading.set(false);
+      if (
+        username === this.demoCredentials.username &&
+        password === this.demoCredentials.password
+      ) {
+        this.isLoggedIn.set(true);
+      } else {
+        this.loginError.set('Credenciales incorrectas. Intente nuevamente.');
+      }
+    }, 600);
   }
 
   handleLogout(): void {
     this.isLoggedIn.set(false);
-    this.form.set({ username: '', password: '' });
+    this.form.reset();
     this.loginError.set('');
   }
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { IconComponent } from '../icon/icon.component';
-import { IconName, IconSize } from '../icon/icon.types'; // ✅ importar IconSize
+import { IconName, IconSize } from '../icon/icon.types';
 
 export type InputType = 'text' | 'password' | 'email' | 'number' | 'search' | 'tel';
 export type InputVariant = 'default' | 'filled' | 'ghost';
@@ -80,14 +80,12 @@ export class InputComponent implements ControlValueAccessor {
     lg: 'px-4 py-3 text-base',
   };
 
-  // ✅ Fix: Record<InputSize, IconSize> en lugar de Record<InputSize, number>
   private readonly iconSizeMap: Record<InputSize, IconSize> = {
     sm: 14,
     md: 16,
     lg: 18,
   };
 
-  // ✅ Fix: retorna IconSize en lugar de number
   get iconSize(): IconSize {
     return this.iconSizeMap[this.size];
   }
