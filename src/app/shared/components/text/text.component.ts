@@ -9,7 +9,8 @@ export type TextVariant =
   | 'accent'
   | 'danger'
   | 'success'
-  | 'warning';
+  | 'warning'
+  | 'white';
 export type TextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
 
@@ -76,6 +77,7 @@ export class TextComponent {
     danger: 'text-red-500',
     success: 'text-green-600',
     warning: 'text-amarillo',
+    white: 'text-white',
   };
 
   private readonly sizeClasses: Record<TextSize, string> = {

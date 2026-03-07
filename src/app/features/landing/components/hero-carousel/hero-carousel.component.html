@@ -1,39 +1,48 @@
 <header
   class="relative bg-azul text-white overflow-hidden flex items-center justify-center min-h-[85vh]"
 >
-  <!-- Background image with overlay -->
+  <!-- Background con overlay -->
   <div
-    class="absolute inset-0 bg-cover bg-center"
+    class="absolute inset-0 bg-cover bg-center transition-all duration-700"
     [style.backgroundImage]="'url(' + slides[currentSlide()].image + ')'"
   ></div>
   <div class="absolute inset-0 bg-black/60 z-0"></div>
 
-  <!-- Content -->
+  <!-- Contenido -->
   <div class="relative z-10 text-center max-w-4xl px-4 flex flex-col items-center">
-    <div
-      class="bg-naranja/20 border border-naranja text-naranja px-4 py-1.5 rounded-full text-sm font-bold flex items-center gap-2 mb-6"
-    >
-      <app-icon name="check-circle" [size]="16"></app-icon>
+    <app-badge variant="primary" icon="check-circle" customClass="mb-6">
       Formación Técnica Superior
-    </div>
+    </app-badge>
 
-    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+    <app-text
+      tag="h1"
+      variant="white"
+      size="3xl"
+      weight="bold"
+      customClass="text-5xl md:text-7xl mb-6 tracking-tight leading-tight"
+    >
       {{ slides[currentSlide()].title }}
-    </h1>
+    </app-text>
 
-    <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed">
+    <app-text variant="white" customClass="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed">
       {{ slides[currentSlide()].subtitle }}
-    </p>
+    </app-text>
 
     <div class="flex flex-col sm:flex-row gap-4">
-      <app-button text="Ver Cursos de Temporada" variant="primary" icon="chevron-right">
+      <app-button variant="primary" size="lg" iconRight="chevron-right">
+        Ver Cursos de Temporada
       </app-button>
-
-      <app-button text="Conocer la Carrera" variant="outline"> </app-button>
+      <app-button
+        variant="outline"
+        size="lg"
+        customClass="border-white text-white hover:bg-white hover:text-azul"
+      >
+        Conocer la Carrera
+      </app-button>
     </div>
   </div>
 
-  <!-- Navigation Arrows -->
+  <!-- Flechas de navegación -->
   <button
     (click)="prevSlide()"
     class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/75 text-white p-3 rounded-full transition-all"
@@ -50,7 +59,7 @@
     <app-icon name="chevron-right" [size]="24"></app-icon>
   </button>
 
-  <!-- Carousel indicators -->
+  <!-- Indicadores -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
     @for (slide of slides; track $index) {
       <button

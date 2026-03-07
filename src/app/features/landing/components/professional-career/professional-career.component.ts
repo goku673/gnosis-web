@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
+import { TextComponent } from '../../../../shared/components/text/text.component';
 import { IconName } from '../../../../shared/components/icon/icon.types';
 
 interface Feature {
@@ -16,7 +17,7 @@ interface Benefit {
 @Component({
   selector: 'app-professional-career',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, TextComponent],
   templateUrl: './professional-career.component.html',
   styleUrl: './professional-career.component.css',
 })
@@ -44,25 +45,10 @@ export class ProfessionalCareerComponent {
       icon: 'check-circle',
       text: 'Título Técnico Superior reconocido por el Ministerio de Educación',
     },
-    {
-      icon: 'check-circle',
-      text: 'Docentes con experiencia en la industria automotriz',
-    },
-    {
-      icon: 'check-circle',
-      text: 'Bolsa de trabajo para egresados',
-    },
-    {
-      icon: 'check-circle',
-      text: 'Talleres equipados con tecnología automotriz moderna',
-    },
-    {
-      icon: 'check-circle',
-      text: 'Convenios con concesionarios y talleres para prácticas',
-    },
-    {
-      icon: 'check-circle',
-      text: 'Certificación en competencias laborales',
-    },
+    { icon: 'check-circle', text: 'Docentes con experiencia en la industria automotriz' },
+    { icon: 'check-circle', text: 'Bolsa de trabajo para egresados' },
+    { icon: 'check-circle', text: 'Talleres equipados con tecnología automotriz moderna' },
+    { icon: 'check-circle', text: 'Convenios con concesionarios y talleres para prácticas' },
+    { icon: 'check-circle', text: 'Certificación en competencias laborales' },
   ];
 }

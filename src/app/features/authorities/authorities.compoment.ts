@@ -1,73 +1,83 @@
-import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { InputComponent } from '../../shared/components/input/input.component';
+import { SelectComponent, SelectOption } from '../../shared/components/select/select.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
+import { BadgeComponent } from '../../shared/components/badge/badge.component';
+import { TextComponent } from '../../shared/components/text/text.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
-
-interface LoginForm {
-  username: string;
-  password: string;
-  roleType: string;
-}
 
 @Component({
   selector: 'app-authorities',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconComponent],
+  imports: [
+    ReactiveFormsModule,
+    InputComponent,
+    SelectComponent,
+    ButtonComponent,
+    FormFieldComponent,
+    BadgeComponent,
+    TextComponent,
+    IconComponent,
+  ],
   templateUrl: './authorities.component.html',
   styleUrl: './authorities.component.css',
 })
 export class AuthoritiesComponent {
-  showPassword = signal(false);
+  isLoading = signal(false);
+  loginError = signal('');
 
-  form = signal<LoginForm>({
-    username: '',
-    password: '',
-    roleType: 'super-admin',
+  form = new FormGroup({
+    roleType: new FormControl('super-admin', [Validators.required]),
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl('', [Validators.required]),
   });
 
-  roles = [
+  roles: SelectOption[] = [
     { value: 'super-admin', label: 'Super Admin' },
     { value: 'academic-admin', label: 'Administrador Académico' },
     { value: 'secretary', label: 'Secretaria' },
   ];
 
-  demoCredentials: { [key: string]: { username: string; password: string } } = {
+  demoCredentials: Record<string, { username: string; password: string }> = {
     'super-admin': { username: 'admin', password: '123' },
     'academic-admin': { username: 'academic', password: '123' },
     secretary: { username: 'secretary', password: '123' },
   };
 
-  togglePasswordVisibility(): void {
-    this.showPassword.update((value) => !value);
+  get currentDemo() {
+    const role = this.form.get('roleType')?.value ?? 'super-admin';
+    return this.demoCredentials[role];
   }
 
-  updateRoleType(value: string): void {
-    this.form.update((form) => ({
-      ...form,
-      roleType: value,
-    }));
-  }
-
-  updateUsername(value: string): void {
-    this.form.update((form) => ({
-      ...form,
-      username: value,
-    }));
-  }
-
-  updatePassword(value: string): void {
-    this.form.update((form) => ({
-      ...form,
-      password: value,
-    }));
+  getError(controlName: string): string {
+    const control = this.form.get(controlName);
+    if (!control || !control.invalid || !control.touched) return '';
+    if (control.hasError('required')) return 'Este campo es obligatorio.';
+    if (control.hasError('minlength'))
+      return `Mínimo ${control.errors?.['minlength'].requiredLength} caracteres.`;
+    return 'Campo inválido.';
   }
 
   handleLogin(): void {
-    const currentForm = this.form();
-    const demoCredential = this.demoCredentials[currentForm.roleType];
+    this.form.markAllAsTouched();
+    if (this.form.invalid) return;
 
-    console.log('Login attempt with role:', currentForm.roleType);
-    console.log('Demo credentials:', demoCredential);
-    // Add your login logic here
+    this.isLoading.set(true);
+    this.loginError.set('');
+
+    const { roleType, username, password } = this.form.value;
+    const demo = this.demoCredentials[roleType!];
+
+    setTimeout(() => {
+      this.isLoading.set(false);
+      if (username === demo.username && password === demo.password) {
+        console.log('Login exitoso como:', roleType);
+        // this.router.navigate(['/dashboard']);
+      } else {
+        this.loginError.set('Credenciales incorrectas. Intente nuevamente.');
+      }
+    }, 600);
   }
 }

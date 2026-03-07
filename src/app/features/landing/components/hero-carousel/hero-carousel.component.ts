@@ -1,11 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
+import { BadgeComponent } from '../../../../shared/components/badge/badge.component';
+import { TextComponent } from '../../../../shared/components/text/text.component';
 
 @Component({
   selector: 'app-hero-carousel',
   standalone: true,
-  imports: [ButtonComponent, IconComponent],
+  imports: [ButtonComponent, IconComponent, BadgeComponent, TextComponent],
   templateUrl: './hero-carousel.component.html',
   styleUrl: './hero-carousel.component.css',
 })
