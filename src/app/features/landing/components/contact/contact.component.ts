@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { IconName } from '../../../../shared/components/icon/icon.types';
+import { TextComponent } from '../../../../shared/components/text/text.component';
 
 interface ContactInfo {
   icon: IconName;
@@ -21,7 +22,7 @@ interface SocialNetwork {
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [IconComponent],
+  imports: [IconComponent, TextComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })

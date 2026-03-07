@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
+import { TextComponent } from '../../../../shared/components/text/text.component';
+import { BadgeComponent } from '../../../../shared/components/badge/badge.component';
 
 interface Course {
   id: number;
@@ -11,12 +13,13 @@ interface Course {
   startDate: string;
   schedules: string[];
   investment: string;
+  featured: boolean;
 }
 
 @Component({
   selector: 'app-seasonal-courses',
   standalone: true,
-  imports: [ButtonComponent, IconComponent],
+  imports: [ButtonComponent, IconComponent, TextComponent, BadgeComponent],
   templateUrl: './seasonal-courses.component.html',
   styleUrl: './seasonal-courses.component.css',
 })
@@ -32,6 +35,7 @@ export class SeasonalCoursesComponent {
       startDate: '15 de Marzo 2026',
       schedules: ['Lunes y Miércoles 18:00-20:00', 'Sábados 08:00-12:00'],
       investment: 'Bs. 1,200',
+      featured: false,
     },
     {
       id: 2,
@@ -43,6 +47,7 @@ export class SeasonalCoursesComponent {
       startDate: '22 de Marzo 2026',
       schedules: ['Martes y Jueves 18:00-20:00', 'Sábados 14:00-18:00'],
       investment: 'Bs. 1,500',
+      featured: true,
     },
   ];
 }

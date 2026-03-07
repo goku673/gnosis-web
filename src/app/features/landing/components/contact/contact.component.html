@@ -1,23 +1,32 @@
-<!-- Contact Information Section -->
+<!-- Contact Section -->
 <section class="py-16 bg-white">
   <div class="container mx-auto px-4 max-w-7xl">
-    <h2 class="text-4xl md:text-5xl font-bold text-azul mb-12 text-center">
+    <app-text
+      tag="h2"
+      size="3xl"
+      weight="bold"
+      variant="primary"
+      customClass="text-4xl md:text-5xl mb-12 text-center"
+    >
       Contacto e Información
-    </h2>
+    </app-text>
 
-    <!-- Contact Information Grid -->
     <div class="grid md:grid-cols-3 gap-8 mb-16">
       @for (info of contactInfo; track info.title) {
         <div
           class="bg-white border-2 border-gray-200 rounded-lg p-8 text-center hover:shadow-lg transition-all"
         >
-          <app-icon [name]="info.icon" class="text-naranja mx-auto mb-4" [size]="40"></app-icon>
-
-          <h3 class="text-xl font-bold text-azul mb-4">{{ info.title }}</h3>
-
+          <app-icon
+            [name]="info.icon"
+            customClass="text-naranja mx-auto mb-4"
+            [size]="40"
+          ></app-icon>
+          <app-text tag="h3" size="lg" weight="bold" variant="primary" customClass="mb-4">
+            {{ info.title }}
+          </app-text>
           <div class="space-y-2">
             @for (detail of info.details; track detail) {
-              <p class="text-gray-600">{{ detail }}</p>
+              <app-text variant="muted">{{ detail }}</app-text>
             }
           </div>
         </div>
@@ -29,7 +38,6 @@
 <!-- Footer -->
 <footer class="bg-azul text-white py-12">
   <div class="container mx-auto px-4 max-w-7xl">
-    <!-- Footer Content -->
     <div class="grid md:grid-cols-3 gap-12 mb-8">
       <!-- About -->
       <div>
@@ -37,23 +45,23 @@
           <div class="w-8 h-8 bg-naranja rounded-full flex items-center justify-center font-bold">
             G
           </div>
-          <span class="text-lg font-bold">GNOSIS</span>
+          <app-text tag="span" size="lg" weight="bold" customClass="text-white">GNOSIS</app-text>
         </div>
-
-        <p class="text-gray-300 text-sm leading-relaxed">
+        <app-text size="sm" customClass="white" leading-relaxed variant="white">
           Formando profesionales técnicos superiores en Autotrónica desde 2010. Comprometidos con la
           excelencia educativa y la calidad técnica.
-        </p>
+        </app-text>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h4 class="text-lg font-bold mb-4">Enlaces Rápidos</h4>
-
+        <app-text tag="h4" size="lg" weight="bold" customClass="text-white mb-4">
+          Enlaces Rápidos
+        </app-text>
         <ul class="space-y-2">
           @for (link of quickLinks; track link.text) {
             <li>
-              <a [href]="link.link" class="text-gray-300 hover:text-naranja transition-colors">
+              <a [href]="link.link" class="text-white hover:text-naranja transition-colors text-sm">
                 {{ link.text }}
               </a>
             </li>
@@ -61,10 +69,11 @@
         </ul>
       </div>
 
-      <!-- Social Networks -->
+      <!-- Social -->
       <div>
-        <h4 class="text-lg font-bold mb-4">Síguenos</h4>
-
+        <app-text tag="h4" size="lg" weight="bold" customClass="text-white mb-4">
+          Síguenos
+        </app-text>
         <div class="flex gap-4">
           @for (network of socialNetworks; track network.icon) {
             <a
@@ -72,7 +81,7 @@
               class="w-10 h-10 bg-white/10 hover:bg-naranja rounded-full flex items-center justify-center transition-colors"
               [attr.aria-label]="network.icon"
             >
-              <app-icon [name]="network.icon" class="text-white" [size]="20"></app-icon>
+              <app-icon [name]="network.icon" [size]="20" variant="white"></app-icon>
             </a>
           }
         </div>
@@ -80,8 +89,10 @@
     </div>
 
     <!-- Copyright -->
-    <div class="border-t border-white/20 pt-8 text-center text-gray-400 text-sm">
-      <p>&copy; 2026 Instituto Tecnológico GNOSIS - Todos los derechos reservados</p>
+    <div class="border-t border-white/20 pt-8 text-center">
+      <app-text size="sm" variant="white">
+        &copy; 2026 Instituto Tecnológico GNOSIS - Todos los derechos reservados
+      </app-text>
     </div>
   </div>
 </footer>
