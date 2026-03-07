@@ -1,0 +1,41 @@
+<div
+  class="stat-card relative rounded-lg border border-gray-200 bg-white p-6 cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-gray-300"
+  [class]="customClasses"
+  (click)="onCardClick()"
+>
+  <!-- Icon Section -->
+  <div
+    class="absolute -top-5 left-6 w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl font-bold"
+    [ngClass]="getIconBgColor()"
+  >
+    {{ config.icon || getDefaultIcon() }}
+  </div>
+
+  <!-- Content -->
+  <div class="pt-8">
+    <!-- Value -->
+    <div class="flex items-baseline gap-2">
+      <h3 class="text-3xl font-bold text-gray-900">
+        {{ config.value }}
+      </h3>
+      <!-- Trend indicator -->
+      <span
+        *ngIf="config.trend"
+        [ngClass]="getTrendClass()"
+        class="text-sm font-semibold"
+      >
+        {{ config.trend.value }}% {{ getTrendIcon() }}
+      </span>
+    </div>
+
+    <!-- Label -->
+    <p class="text-sm text-gray-600 mt-2 font-medium">
+      {{ config.label }}
+    </p>
+
+    <!-- Subtitle / Description -->
+    <p *ngIf="config.subtitle" class="text-xs text-gray-500 mt-1">
+      {{ config.subtitle }}
+    </p>
+  </div>
+</div>

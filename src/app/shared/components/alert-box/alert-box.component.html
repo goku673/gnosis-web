@@ -1,0 +1,42 @@
+<div *ngIf="isVisible" [ngClass]="getAlertClasses()" [class]="customClasses" role="alert">
+  <!-- Icon -->
+  <div class="flex-shrink-0 text-xl" [ngClass]="getIconClass()">
+    {{ getIconContent() }}
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1">
+    <h3 *ngIf="config.title" class="font-semibold text-sm mb-1">
+      {{ config.title }}
+    </h3>
+    <p class="text-sm">
+      {{ config.message }}
+    </p>
+
+    <!-- Actions -->
+    <div *ngIf="config.actions && config.actions.length > 0" class="flex gap-2 mt-3">
+      <button
+        *ngFor="let action of config.actions"
+        (click)="onActionClick(action.label)"
+        [ngClass]="{
+          'bg-blue-600 hover:bg-blue-700 text-white': action.variant === 'primary' || !action.variant,
+          'bg-gray-200 hover:bg-gray-300 text-gray-800': action.variant === 'secondary',
+          'bg-red-600 hover:bg-red-700 text-white': action.variant === 'danger',
+        }"
+        class="px-3 py-1 rounded text-sm font-medium transition-colors duration-200"
+      >
+        {{ action.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Close Button -->
+  <button
+    *ngIf="config.closable"
+    (click)="close()"
+    class="flex-shrink-0 text-lg leading-none hover:opacity-70 transition-opacity"
+    aria-label="Close alert"
+  >
+    ✕
+  </button>
+</div>

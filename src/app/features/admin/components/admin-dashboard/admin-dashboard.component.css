@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+::ng-deep {
+  app-admin-dashboard button {
+    transition: all 0.3s ease;
+  }
+
+  app-admin-dashboard button:hover {
+    transform: translateY(-2px);
+  }
+}

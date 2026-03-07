@@ -1,0 +1,83 @@
+<app-dashboard-layout [config]="layoutConfig" (logout)="confirmLogout()">
+  <!-- Stats Cards Row -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <app-stat-card *ngFor="let card of statCards" [config]="card"></app-stat-card>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left Column: Quick Access & Activity -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Quick Access Section -->
+      <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 class="text-lg font-bold text-gray-900 mb-4">Accesos Rápidos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button
+            *ngFor="let btn of quickAccessButtons"
+            (click)="btn.onClick()"
+            class="px-6 py-4 rounded-lg font-semibold text-lg text-white transition-transform duration-200 hover:scale-105 hover:shadow-lg flex items-center justify-center gap-3"
+            [style.background-color]="btn.backgroundColor"
+            [style.color]="btn.textColor"
+          >
+            <span class="text-2xl">{{ btn.icon }}</span>
+            <span class="text-center">{{ btn.label }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Recent Activity Section -->
+      <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <h2 class="text-lg font-bold text-gray-900 mb-4">Actividad Reciente</h2>
+        <div class="space-y-3">
+          <app-activity-item
+            *ngFor="let activity of recentActivityItems"
+            [item]="activity"
+          ></app-activity-item>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Alerts & Period Info -->
+    <div class="space-y-6">
+      <!-- Alerts Section -->
+      <div class="space-y-3">
+        <h2 class="text-lg font-bold text-gray-900 px-1">Alertas y Notificaciones</h2>
+        <app-alert-box *ngFor="let alert of alerts" [config]="alert"></app-alert-box>
+      </div>
+
+      <!-- Active Period Card -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg border border-slate-700 p-6 text-white">
+        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-4">Período Académico Activo</h3>
+        
+        <div class="space-y-4">
+          <div>
+            <p class="text-4xl font-bold text-white mb-2">{{ activePeriod().name }}</p>
+            <p class="text-sm text-slate-300">{{ activePeriod().startDate }} - {{ activePeriod().endDate }}</p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-slate-400">Estatus:</span>
+              <span
+                class="px-3 py-1 rounded-full text-sm font-semibold"
+                [class.bg-green-500/20]="activePeriod().status === 'Activo'"
+                [class.text-green-300]="activePeriod().status === 'Activo'"
+              >
+                {{ activePeriod().status }}
+              </span>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700 space-y-2">
+            <p class="text-xs text-slate-400">Información:</p>
+            <ul class="text-sm text-slate-300 space-y-1">
+              <li>Inicio: {{ activePeriod().startDate }}</li>
+              <li>Finalización: {{ activePeriod().endDate }}</li>
+              <li class="pt-2 text-slate-400 text-xs">Período: {{ activePeriod().name }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dashboard-layout>

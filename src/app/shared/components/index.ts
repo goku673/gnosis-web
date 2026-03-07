@@ -24,3 +24,10 @@ export { FormFieldComponent } from './form-field/form-field.component';
 
 export { IconComponent } from './icon/icon.component';
 export type { IconName, IconSize } from './icon/icon.types';
+
+// Dashboard Components - Reutilizables
+export { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+export { StatCardComponent } from './stat-card/stat-card.component';
+export { DataTableComponent } from './data-table/data-table.component';
+export { AlertBoxComponent } from './alert-box/alert-box.component';
+export { ActivityItemComponent } from './activity-item/activity-item.component';

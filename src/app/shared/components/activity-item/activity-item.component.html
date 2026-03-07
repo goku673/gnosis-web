@@ -1,0 +1,40 @@
+<div
+  class="activity-item flex items-start gap-4 p-4 rounded-lg border border-gray-200 bg-white hover:shadow-md transition-shadow duration-200 cursor-pointer"
+  [class]="customClasses"
+  (click)="onClick()"
+>
+  <!-- Icon/Avatar -->
+  <div class="flex-shrink-0">
+    <div
+      *ngIf="!item.avatar"
+      class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white"
+      [ngClass]="getTypeColor()"
+    >
+      {{ getTypeIcon() }}
+    </div>
+    <img
+      *ngIf="item.avatar"
+      [src]="item.avatar"
+      alt="Activity avatar"
+      class="w-10 h-10 rounded-full object-cover"
+    />
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 min-w-0">
+    <h4 class="text-sm font-semibold text-gray-900 truncate">
+      {{ item.title }}
+    </h4>
+    <p *ngIf="item.description" class="text-sm text-gray-600 mt-0.5 line-clamp-2">
+      {{ item.description }}
+    </p>
+    <p class="text-xs text-gray-500 mt-1">
+      {{ getRelativeTime() }}
+    </p>
+  </div>
+
+  <!-- Timestamp -->
+  <div class="flex-shrink-0 text-xs text-gray-500 text-right">
+    {{ getRelativeTime() }}
+  </div>
+</div>

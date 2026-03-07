@@ -1,0 +1,127 @@
+<div class="flex h-screen bg-gray-100" [class]="customClasses">
+  <!-- Sidebar -->
+  <aside
+    class="bg-slate-900 text-white transition-all duration-300 flex flex-col"
+    [class.w-64]="sidebarOpen"
+    [class.w-20]="!sidebarOpen"
+  >
+    <!-- Logo Section -->
+    <div class="p-4 border-b border-slate-700 flex items-center justify-between">
+      <div *ngIf="sidebarOpen" class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center font-bold text-sm">
+          G
+        </div>
+        <div>
+          <p class="font-bold text-sm">GNOSIS</p>
+          <p class="text-xs text-slate-400">Sistema Académico</p>
+        </div>
+      </div>
+      <button
+        (click)="toggleSidebar()"
+        class="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+        aria-label="Toggle sidebar"
+      >
+        {{ sidebarOpen ? '◀' : '▶' }}
+      </button>
+    </div>
+
+    <!-- Navigation Items -->
+    <nav class="flex-1 overflow-y-auto py-4">
+      <ul class="space-y-2 px-2">
+        <li *ngFor="let item of config.sidebarItems">
+          <!-- Main Item -->
+          <button
+            (click)="onSidebarItemClick(item); toggleSidebarItem(item)"
+            [class.bg-orange-500]="item.active"
+            class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-slate-800 transition-colors text-left text-sm font-medium"
+            [title]="!sidebarOpen ? item.label : ''"
+          >
+            <span class="flex-shrink-0 text-lg">{{ getItemIconChar(item) }}</span>
+            <span *ngIf="sidebarOpen" class="flex-1">{{ item.label }}</span>
+            <span
+              *ngIf="sidebarOpen && item.badge"
+              class="flex-shrink-0 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"
+            >
+              {{ item.badge }}
+            </span>
+          </button>
+
+          <!-- Submenu -->
+          <ul
+            *ngIf="sidebarOpen && item.children && item.children.length > 0 && isItemExpanded(item.id)"
+            class="ml-4 space-y-1 mt-1"
+          >
+            <li *ngFor="let child of item.children">
+              <button
+                (click)="onSidebarItemClick(child)"
+                [class.bg-slate-700]="child.active"
+                class="w-full text-left px-3 py-2 text-sm rounded hover:bg-slate-700 transition-colors"
+              >
+                {{ child.label }}
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- User Section at Bottom -->
+    <div class="border-t border-slate-700 p-4">
+      <button
+        (click)="onLogout()"
+        class="w-full flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors text-sm text-left"
+        [title]="!sidebarOpen ? 'Cerrar sesión' : ''"
+      >
+        <span class="flex-shrink-0 text-lg">🚪</span>
+        <span *ngIf="sidebarOpen">Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+      <!-- Breadcrumb / Title -->
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Panel de {{ config.userRole === 'admin' ? 'Administración' : 'Docente' }}</h1>
+        <p class="text-sm text-gray-600 mt-0.5">{{ config.userName }}</p>
+      </div>
+
+      <!-- Right Section -->
+      <div class="flex items-center gap-4">
+        <!-- Notifications -->
+        <button *ngIf="config.showNotifications" class="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
+          🔔
+          <span
+            *ngIf="config.notificationCount && config.notificationCount > 0"
+            class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+          >
+            {{ config.notificationCount }}
+          </span>
+        </button>
+
+        <!-- User Profile -->
+        <div class="flex items-center gap-3 pl-4 border-l border-gray-200">
+          <div *ngIf="config.userAvatar" class="w-10 h-10 rounded-full bg-gray-300">
+            <img [src]="config.userAvatar" alt="User avatar" class="w-full h-full rounded-full object-cover" />
+          </div>
+          <div *ngIf="!config.userAvatar" class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white" [ngClass]="getRoleColor()">
+            {{ getUserInitials() }}
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-gray-900">{{ config.userName }}</p>
+            <p class="text-xs text-gray-600">{{ config.userTitle }}</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto bg-gray-50">
+      <div class="p-8">
+        <ng-content></ng-content>
+      </div>
+    </main>
+  </div>
+</div>

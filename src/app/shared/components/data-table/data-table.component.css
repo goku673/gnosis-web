@@ -1,0 +1,21 @@
+::ng-deep {
+  .data-table-wrapper table {
+    border-collapse: collapse;
+  }
+
+  .data-table-wrapper tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .data-table-wrapper tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .data-table-wrapper input[type='text'] {
+    transition: all 0.3s ease;
+  }
+
+  .data-table-wrapper input[type='text']:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
